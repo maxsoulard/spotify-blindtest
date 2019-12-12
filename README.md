@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
 
+## Spotify web api usage
+Auth:
+https://developer.spotify.com/documentation/web-api/quick-start/
+
+Web Playback:
+https://developer.spotify.com/documentation/web-playback-sdk/reference/#playing-a-spotify-uri
+Example in examples/spotify.html
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
