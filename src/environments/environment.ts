@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  spotifyPlayerKey: 'BQDriuTtoHuKPlnCR0xpSrqHCiMuRMV6zqemBJjJpG1dNXugP5YYjIt8Sehs26LVLkpzCrcSMk8zp0m1LVimCPQ7PFpfMb5lXV42ODyrpJzR_lAUik5mNPPzfqLPYo9zRTwJz2NLanUAeCjCLuKCj_lgTqi_Fg',
-  spotifyAPIKey: 'BQDdWuSF1zDqJ5M08QUxlybmMfVUDYWqpw796kbkbk8xd406ia5958CICiY-SSG28ucQ-bY1fPtNusPbgJHt6q4W3qlFeCcyfX96Bangu6utLsxHbyG5Hqy3faELXQvnMBss32E25GAQj78C8qvC0lxRXn7aqV6zjsWkLlbLwdPtCbWOxPE67zK9Pw5YLR_wih5HIskelK2UuYCsKei1yVeE9HWQ0EU_a_q7BTPbfmnUOkifuXFVeXPdop91QkxaSP_bCsVl'
+  spotifyBaseUrl: 'https://accounts.spotify.com',
+  spotifyRedirectUri: `${document.location.origin}/spotify-access`,
+  clientId: 'e22d6ae4c0f943cc8394715461713cff'
 };
 
 /*

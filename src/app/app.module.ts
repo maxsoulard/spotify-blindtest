@@ -8,6 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { playerReducer } from './reducers/play.reducer';
 import { SpotifyAuthInterceptor } from './interceptors/spotify-auth-interceptor';
+import { SpotifyAuthModule } from './spotify-auth/spotify-auth.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { SpotifyAuthInterceptor } from './interceptors/spotify-auth-interceptor'
     BrowserModule,
     AppRoutingModule,
     SpotifyPlayerModule,
+    SpotifyAuthModule,
     HttpClientModule,
     StoreModule.forRoot({
       play: playerReducer,

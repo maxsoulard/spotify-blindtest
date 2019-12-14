@@ -11,7 +11,7 @@ export class SpotifyPlayerService {
 
   getSpotifyInstance(cb) {
     // return new Promise((resolve, reject) => {
-      const token = environment.spotifyPlayerKey;
+      const token = localStorage.getItem('access_token');
       const player = new Spotify.Player({
         name: 'Web Playback SDK Quick Start Player',
         getOAuthToken: cb => { cb(token); }

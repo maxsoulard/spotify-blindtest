@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { SpotifyAuthService } from '../spotify-auth.service';
 
 @Component({
   selector: 'app-spotify-login',
@@ -7,13 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SpotifyLoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private spotifyAuthService: SpotifyAuthService) { }
 
   ngOnInit() {
   }
 
   login() {
-
+    this.spotifyAuthService.login();
   }
 
 }

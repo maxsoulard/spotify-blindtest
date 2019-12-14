@@ -9,7 +9,7 @@ export class SpotifyAuthInterceptor implements HttpInterceptor {
     if (req.url.includes('api.spotify.com')) {
       req = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${environment.spotifyAPIKey}`
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`
         }
       });
       return next.handle(req);
