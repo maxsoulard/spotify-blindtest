@@ -2,19 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlayerComponent } from './player/player.component';
 import { SpotifyPlayerService } from './spotify-player.service';
+import { AlbumsBrowseComponent } from './albums-browse/albums-browse.component';
 
 
 
 @NgModule({
-  declarations: [PlayerComponent],
+  declarations: [PlayerComponent, AlbumsBrowseComponent],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   providers: [
     SpotifyPlayerService
   ],
   exports: [
-    PlayerComponent
+    PlayerComponent,
+    AlbumsBrowseComponent
   ]
 })
 export class SpotifyPlayerModule { }

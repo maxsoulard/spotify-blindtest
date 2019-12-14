@@ -9,11 +9,12 @@ export class SpotifyPlayerService {
 
   constructor() { }
 
-  getSpotifyInstance(): Promise<{player: any, deviceId: string}> {
-    return new Promise((resolve, reject) => {
+  getSpotifyInstance(cb) {
+    // return new Promise((resolve, reject) => {
+      const token = environment.spotifyPlayerKey;
       const player = new Spotify.Player({
         name: 'Web Playback SDK Quick Start Player',
-        getOAuthToken: cb => { cb(environment.spotifyAPIKey); }
+        getOAuthToken: cb => { cb(token); }
       });
 
       // Error handling
@@ -33,7 +34,20 @@ export class SpotifyPlayerService {
       player.connect();
 
       player.addListener('ready', ({ deviceId }) => {
-        resolve({player, deviceId});
+        cb({player, deviceId});
+      });
+    // });
+  }
+
+  play({ spotify_uri, playerInstance: { _options: { getOAuthToken, id }}}) {
+    getOAuthToken(accessToken => {
+      fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ uris: [spotify_uri] }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        },
       });
     });
   }

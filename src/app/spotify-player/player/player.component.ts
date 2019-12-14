@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { SpotifyPlayerService } from '../spotify-player.service';
+import { Store, select } from '@ngrx/store';
+import { play } from 'src/app/actions/play.actions';
+import { tap, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-player',
@@ -9,45 +11,35 @@ import { SpotifyPlayerService } from '../spotify-player.service';
 })
 export class PlayerComponent implements OnInit {
 
-  constructor(private spotifyPlayerService: SpotifyPlayerService) { }
+  private spotifyInstance: any;
+
+  constructor(private store: Store<{ play: boolean }>, private spotifyPlayerService: SpotifyPlayerService) {
+    // Init spotify SDK
+    (<any>window).onSpotifyWebPlaybackSDKReady = () => {
+      try {
+        this.spotifyPlayerService.getSpotifyInstance(({player, deviceId}) => {
+          this.spotifyInstance = {player, deviceId};
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
 
   async ngOnInit() {
-    (<any>window).onSpotifyWebPlaybackSDKReady = async () => {
+    this.store.pipe(
+      select('play'),
+      filter((state) => !!state),
+    ).subscribe(() => {
+      this.spotifyPlayerService.play({
+        playerInstance: this.spotifyInstance.player,
+        spotify_uri: 'spotify:track:7xGfFoTpQ2E7fRF5lN10tr',
+      });
+    });
+  }
 
-      try {
-        const {player, deviceId} = await this.spotifyPlayerService.getSpotifyInstance();
-        console.log(`Device ${deviceId} connected`);
-
-        const play = ({
-          spotify_uri,
-          playerInstance: {
-            _options: {
-              getOAuthToken,
-              id
-            }
-          }
-        }) => {
-          getOAuthToken(access_token => {
-            fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
-              method: 'PUT',
-              body: JSON.stringify({ uris: [spotify_uri] }),
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${access_token}`
-              },
-            });
-          });
-        };
-
-        play({
-          playerInstance: player,
-          spotify_uri: 'spotify:track:7xGfFoTpQ2E7fRF5lN10tr',
-        });
-
-        } catch (error) {
-          console.error(error);
-        }
-      };
-    }
+  playSong() {
+    this.store.dispatch(play());
+  }
 
 }
