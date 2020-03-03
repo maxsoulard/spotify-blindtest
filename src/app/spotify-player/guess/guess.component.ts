@@ -19,11 +19,12 @@ export class GuessComponent implements OnInit {
     this.guessTerms.pipe(
       debounceTime(300),
       filter(terms => !!terms),
-      tap(terms => console.log(terms))
-    ).subscribe(terms => this.store.dispatch(guess({userInput: terms}))); // TODO pass action payload
+    ).subscribe(terms => this.store.dispatch(guess({userInput: terms})));
   }
 
-  guess(term) {
-    this.guessTerms.next(term);
+  guess($event, term) {
+    if ($event.key.toLowerCase() === 'enter') {
+      this.guessTerms.next(term);
+    }
   }
 }

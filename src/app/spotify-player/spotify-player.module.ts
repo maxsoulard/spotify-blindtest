@@ -4,11 +4,13 @@ import { PlayerComponent } from './player/player.component';
 import { GuessComponent } from './guess/guess.component';
 import { StoreModule } from '@ngrx/store';
 import { playerReducer } from '../reducers/play.reducer';
+import { ScoreComponent } from './score/score.component';
 
 @NgModule({
   declarations: [
     PlayerComponent,
-    GuessComponent
+    GuessComponent,
+    ScoreComponent
   ],
   imports: [
     CommonModule,

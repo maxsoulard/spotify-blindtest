@@ -10,6 +10,8 @@ import { playerReducer } from './reducers/play.reducer';
 import { guessReducer } from './reducers/guess.reducer';
 import { SpotifyAuthInterceptor } from './interceptors/spotify-auth-interceptor';
 import { SpotifyAuthModule } from './spotify-auth/spotify-auth.module';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,11 @@ import { SpotifyAuthModule } from './spotify-auth/spotify-auth.module';
     HttpClientModule,
     StoreModule.forRoot({
       // guess: guessReducer,
+    }),
+    StoreDevtoolsModule.instrument({
+      name: 'Spotify Blindtest',
+      maxAge: 25,
+      logOnly: environment.production
     }),
   ],
   providers: [

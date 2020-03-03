@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SpotifyPlayerService } from '../spotify-player.service';
 import { Store, select } from '@ngrx/store';
 import { play } from 'src/app/actions/play.actions';
-import { flatMap, map, skip, filter, switchMap, tap } from 'rxjs/operators';
+import { map, filter, switchMap, tap } from 'rxjs/operators';
 import { SpotifyBrowseService } from 'src/app/spotify-browse/spotify-browse.service';
 import { PlayerState } from 'src/app/reducers/play.reducer';
 
