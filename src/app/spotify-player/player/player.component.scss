@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0.5em 0 0.5em 0;
+}
+
+app-guess {
+  margin: 0.5em 0 1em 0;
+}

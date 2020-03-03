@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "spotify-blindtest"
+    }
+  },
+  "defaultProject": "spotify-blindtest",
+  "cli": {
+    "analytics": false
+  }
 }
