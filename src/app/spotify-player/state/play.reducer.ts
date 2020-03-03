@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { play } from '../actions/play.actions';
+import { play } from './play.actions';
 
 
 const initialState: PlayerState = {

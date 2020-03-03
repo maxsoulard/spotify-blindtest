@@ -1,19 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlayerComponent } from './player/player.component';
-import { GuessComponent } from './guess/guess.component';
 import { StoreModule } from '@ngrx/store';
-import { playerReducer } from '../reducers/play.reducer';
-import { ScoreComponent } from './score/score.component';
+import { BlindtestModule } from '../blindtest/blindtest.module';
+import { playerReducer } from './state/play.reducer';
 
 @NgModule({
   declarations: [
     PlayerComponent,
-    GuessComponent,
-    ScoreComponent
   ],
   imports: [
     CommonModule,
+    BlindtestModule,
     StoreModule.forFeature('player', playerReducer),
   ],
   providers: [

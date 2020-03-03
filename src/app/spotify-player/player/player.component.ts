@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyPlayerService } from '../spotify-player.service';
 import { Store, select } from '@ngrx/store';
-import { play } from 'src/app/actions/play.actions';
 import { map, filter, switchMap, tap } from 'rxjs/operators';
 import { SpotifyBrowseService } from 'src/app/spotify-browse/spotify-browse.service';
-import { PlayerState } from 'src/app/reducers/play.reducer';
+import { play } from '../state/play.actions';
+import { PlayerState } from '../state/play.reducer';
 
 @Component({
   selector: 'app-player',

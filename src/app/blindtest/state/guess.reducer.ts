@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
-import { guess } from '../actions/guess.actions';
+import { guess } from './guess.actions';
 
-const initialState: GuessState = {
+const initialState: BlindtestState = {
   userInput: ''
 };
 
@@ -19,6 +19,6 @@ export function guessReducer(state, action) {
   return _guessReducer(state, action);
 }
 
-export interface GuessState {
+export interface BlindtestState {
   userInput: string;
 }
