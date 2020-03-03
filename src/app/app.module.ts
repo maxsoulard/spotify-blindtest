@@ -7,6 +7,7 @@ import { SpotifyPlayerModule } from './spotify-player/spotify-player.module';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { playerReducer } from './reducers/play.reducer';
+import { guessReducer } from './reducers/guess.reducer';
 import { SpotifyAuthInterceptor } from './interceptors/spotify-auth-interceptor';
 import { SpotifyAuthModule } from './spotify-auth/spotify-auth.module';
 
@@ -21,7 +22,7 @@ import { SpotifyAuthModule } from './spotify-auth/spotify-auth.module';
     SpotifyAuthModule,
     HttpClientModule,
     StoreModule.forRoot({
-      play: playerReducer,
+      // guess: guessReducer,
     }),
   ],
   providers: [
