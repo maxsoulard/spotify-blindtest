@@ -1,4 +1,4 @@
-import { createReducer, on } from '@ngrx/store';
+import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
 import { play } from './play.actions';
 import * as fromRoot from '../../state/app.state';
 
@@ -25,6 +25,12 @@ const _playerReducer = createReducer(initialState,
   );
 
 
-export function playerReducer(state, action) {
+export function playerReducer(state: PlayerState, action) {
   return _playerReducer(state, action);
 }
+
+const getPlayerFeatureState = createFeatureSelector<PlayerState>('player');
+export const isPlayRandomSong = createSelector(
+  getPlayerFeatureState,
+  state => state.playRandomSong
+);

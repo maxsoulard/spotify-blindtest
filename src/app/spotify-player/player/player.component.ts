@@ -2,9 +2,9 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SpotifyPlayerService } from '../spotify-player.service';
 import { Store, select } from '@ngrx/store';
 import { map, filter, switchMap, tap } from 'rxjs/operators';
-import { SpotifyBrowseService } from 'src/app/spotify-browse/spotify-browse.service';
+import { SpotifyBrowseService } from 'src/app/spotify-api-services/spotify-browse.service';
 import { play } from '../state/play.actions';
-import { PlayerState } from '../state/play.reducer';
+import { PlayerState, isPlayRandomSong } from '../state/play.reducer';
 
 @Component({
   selector: 'app-player',
@@ -38,10 +38,8 @@ export class PlayerComponent implements OnInit {
 
   ngOnInit() {
     this.store.pipe(
-      select('player'),
-      filter((player: PlayerState) => {
-        return !!player.playRandomSong;
-      }),
+      select(isPlayRandomSong),
+      filter((playRandomSong: boolean) => !!playRandomSong),
       switchMap(() => {
         return this.spotifyBrowseService.getUserTopTracks();
       }),
@@ -58,10 +56,8 @@ export class PlayerComponent implements OnInit {
     });
 
     this.store.pipe(
-      select('player'),
-      filter((player: PlayerState) => {
-        return !player.playRandomSong;
-      }),
+      select(isPlayRandomSong),
+      filter((playRandomSong: boolean) => !playRandomSong),
       tap(() => {
         if (this.spotifyInstance && this.spotifyInstance.player) {
           this.spotifyInstance.player.pause();

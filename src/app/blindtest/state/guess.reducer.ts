@@ -24,6 +24,6 @@ const _guessReducer = createReducer(initialState,
     }),
 );
 
-export function guessReducer(state, action) {
+export function guessReducer(state: BlindtestState, action) {
   return _guessReducer(state, action);
 }
