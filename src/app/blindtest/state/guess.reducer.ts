@@ -1,4 +1,4 @@
-import { createReducer, on } from '@ngrx/store';
+import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
 import { guess } from './guess.actions';
 import * as fromRoot from '../../state/app.state';
 
@@ -27,3 +27,9 @@ const _guessReducer = createReducer(initialState,
 export function guessReducer(state: BlindtestState, action) {
   return _guessReducer(state, action);
 }
+
+const getGuesserFeatureState = createFeatureSelector<BlindtestState>('blindtest');
+export const getGuessUserInput = createSelector(
+  getGuesserFeatureState,
+  state => state.userInput
+);

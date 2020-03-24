@@ -24,7 +24,7 @@ export class SpotifyPlayerService {
       player.addListener('playback_error', ({ message }) => { throw new Error(message); });
 
       // Playback status updates
-      player.addListener('player_state_changed', state => { console.log(state); });
+      // player.addListener('player_state_changed', state => { console.log(state); });
 
       // Not Ready
       player.addListener('not_ready', ({ deviceId }) => {

@@ -11,7 +11,6 @@ import { playerReducer } from './state/play.reducer';
   ],
   imports: [
     CommonModule,
-    BlindtestModule,
     StoreModule.forFeature('player', playerReducer),
   ],
   providers: [

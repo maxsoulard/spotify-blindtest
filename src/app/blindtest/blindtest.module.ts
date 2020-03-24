@@ -17,7 +17,8 @@ import { guessReducer } from './state/guess.reducer';
     StoreModule.forFeature('blindtest', guessReducer),
   ],
   exports: [
-    GuessComponent
+    GuessComponent,
+    ScoreComponent
   ]
 })
 export class BlindtestModule { }

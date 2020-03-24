@@ -3,7 +3,7 @@ import { SpotifyPlayerService } from '../spotify-player.service';
 import { Store, select } from '@ngrx/store';
 import { map, filter, switchMap, tap } from 'rxjs/operators';
 import { SpotifyBrowseService } from 'src/app/spotify-api-services/spotify-browse.service';
-import { play } from '../state/play.actions';
+import { play, setTrackPlaying } from '../state/play.actions';
 import { PlayerState, isPlayRandomSong } from '../state/play.reducer';
 
 @Component({
@@ -49,6 +49,7 @@ export class PlayerComponent implements OnInit {
       })
     ).subscribe((randomTrack) => {
       this.trackPlaying = randomTrack;
+      this.store.dispatch(setTrackPlaying({trackPlaying: randomTrack}))
       this.spotifyPlayerService.play({
         playerInstance: this.spotifyInstance.player,
         spotify_uri: randomTrack.uri,

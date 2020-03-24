@@ -10,16 +10,20 @@ import { SpotifyAuthInterceptor } from './interceptors/spotify-auth-interceptor'
 import { SpotifyAuthModule } from './spotify-auth/spotify-auth.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { GameComponent } from './game/game.component';
+import { BlindtestModule } from './blindtest/blindtest.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SpotifyPlayerModule,
     SpotifyAuthModule,
+    SpotifyPlayerModule,
+    BlindtestModule,
     HttpClientModule,
     StoreModule.forRoot({
       // guess: guessReducer,
