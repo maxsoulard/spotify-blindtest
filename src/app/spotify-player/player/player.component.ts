@@ -1,10 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SpotifyPlayerService } from '../spotify-player.service';
 import { Store, select } from '@ngrx/store';
-import { map, filter, switchMap, tap, mergeMap } from 'rxjs/operators';
-import { SpotifyBrowseService } from 'src/app/spotify-api-services/spotify-browse.service';
-import { play, playSuccess } from '../state/play.actions';
-import { PlayerState, isPlayRandomSong, getTrackPlaying } from '../state/play.reducer';
+import { play } from '../state/play.actions';
+import { getTrackPlaying } from '../state/play.reducer';
 
 @Component({
   selector: 'app-player',
@@ -20,7 +18,6 @@ export class PlayerComponent implements OnInit {
 
   constructor(private store: Store<any>,
     private spotifyPlayerService: SpotifyPlayerService,
-    private spotifyBrowseService: SpotifyBrowseService,
     private changeDetector: ChangeDetectorRef) {
       // Init spotify SDK
       (<any>window).onSpotifyWebPlaybackSDKReady = () => {
@@ -39,7 +36,6 @@ export class PlayerComponent implements OnInit {
   ngOnInit() {
     this.store.pipe(
       select(getTrackPlaying),
-      tap(result => console.log(result))
     ).subscribe((randomTrack) => {
       if (randomTrack) {
         this.trackPlaying = randomTrack;
