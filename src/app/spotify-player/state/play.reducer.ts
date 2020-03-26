@@ -1,5 +1,5 @@
 import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
-import { play, setTrackPlaying } from './play.actions';
+import { play, playSuccess } from './play.actions';
 import * as fromRoot from '../../state/app.state';
 import { SpotifyTrack } from '../model/spotify-track-informations.model';
 
@@ -25,7 +25,7 @@ const _playerReducer = createReducer(initialState,
         playRandomSong: !state.playRandomSong,
       };
     }),
-    on(setTrackPlaying,
+    on(playSuccess,
       (state, action): PlayerState => {
         return {
           ...state,

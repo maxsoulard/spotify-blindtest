@@ -12,6 +12,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { GameComponent } from './game/game.component';
 import { BlindtestModule } from './blindtest/blindtest.module';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -25,9 +26,8 @@ import { BlindtestModule } from './blindtest/blindtest.module';
     SpotifyPlayerModule,
     BlindtestModule,
     HttpClientModule,
-    StoreModule.forRoot({
-      // guess: guessReducer,
-    }),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       name: 'Spotify Blindtest',
       maxAge: 25,

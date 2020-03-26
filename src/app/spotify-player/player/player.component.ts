@@ -1,16 +1,16 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SpotifyPlayerService } from '../spotify-player.service';
 import { Store, select } from '@ngrx/store';
-import { map, filter, switchMap, tap } from 'rxjs/operators';
+import { map, filter, switchMap, tap, mergeMap } from 'rxjs/operators';
 import { SpotifyBrowseService } from 'src/app/spotify-api-services/spotify-browse.service';
-import { play, setTrackPlaying } from '../state/play.actions';
-import { PlayerState, isPlayRandomSong } from '../state/play.reducer';
+import { play, playSuccess } from '../state/play.actions';
+import { PlayerState, isPlayRandomSong, getTrackPlaying } from '../state/play.reducer';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss'],
-  providers: [SpotifyPlayerService, SpotifyBrowseService]
+  providers: []
 })
 export class PlayerComponent implements OnInit {
 
@@ -38,32 +38,17 @@ export class PlayerComponent implements OnInit {
 
   ngOnInit() {
     this.store.pipe(
-      select(isPlayRandomSong),
-      filter((playRandomSong: boolean) => !!playRandomSong),
-      switchMap(() => {
-        return this.spotifyBrowseService.getUserTopTracks();
-      }),
-      map((topTracks: any) => {
-        const randomIndex = Math.floor(Math.random() * Math.floor(20));
-        return topTracks.items[randomIndex];
-      })
+      select(getTrackPlaying),
+      tap(result => console.log(result))
     ).subscribe((randomTrack) => {
-      this.trackPlaying = randomTrack;
-      this.store.dispatch(setTrackPlaying({trackPlaying: randomTrack}))
-      this.spotifyPlayerService.play({
-        playerInstance: this.spotifyInstance.player,
-        spotify_uri: randomTrack.uri,
-      });
+      if (randomTrack) {
+        this.trackPlaying = randomTrack;
+        this.spotifyPlayerService.play({
+          playerInstance: this.spotifyInstance.player,
+          spotify_uri: randomTrack.uri,
+        });
+      }
     });
-
-    this.store.pipe(
-      select(isPlayRandomSong),
-      filter((playRandomSong: boolean) => !playRandomSong),
-      tap(() => {
-        if (this.spotifyInstance && this.spotifyInstance.player) {
-          this.spotifyInstance.player.pause();
-        }
-      })).subscribe();
   }
 
   playSong() {

@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlayerComponent } from './player/player.component';
 import { StoreModule } from '@ngrx/store';
-import { BlindtestModule } from '../blindtest/blindtest.module';
 import { playerReducer } from './state/play.reducer';
+import { PlayEffects } from './state/play.effects';
+import { EffectsModule } from '@ngrx/effects';
+import { SpotifyBrowseService } from '../spotify-api-services/spotify-browse.service';
 
 @NgModule({
   declarations: [
@@ -12,8 +14,12 @@ import { playerReducer } from './state/play.reducer';
   imports: [
     CommonModule,
     StoreModule.forFeature('player', playerReducer),
+    EffectsModule.forFeature(
+      [ PlayEffects ]
+    ),
   ],
   providers: [
+    SpotifyBrowseService,
   ],
   exports: [
     PlayerComponent,

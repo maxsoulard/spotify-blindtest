@@ -3,6 +3,7 @@ export interface SpotifyTrack {
   href: string;
   id: string;
   name: string;
+  uri: string;
 }
 
 export interface SpotifyArtist {
