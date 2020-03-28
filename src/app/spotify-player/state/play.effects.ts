@@ -13,7 +13,7 @@ export class PlayEffects {
   getRandomSong$ = this.actions$.pipe(
     ofType(playActions.play),
     mergeMap((action: any) => this.spotifyBrowseService.getARandomSong().pipe(
-        map((randomTrack: SpotifyTrack) => (playActions.playSuccess({trackPlaying: randomTrack})))
+        map((randomTrack: SpotifyTrack) => (playActions.getRandomTrackSuccess({trackPlaying: randomTrack})))
       )
     )
   )
