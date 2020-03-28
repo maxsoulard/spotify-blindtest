@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { ScoreService } from './score.service';
-import { getGuessUserInput } from '../state/guess.reducer';
-import { switchMap, tap } from 'rxjs/operators';
+import { getPlayerScore } from '../state/guess.reducer';
 
 @Component({
   selector: 'app-score',
@@ -12,13 +11,12 @@ import { switchMap, tap } from 'rxjs/operators';
 })
 export class ScoreComponent implements OnInit {
 
+  playerScore: number = 0;
+
   constructor(private store: Store<{ guess: string }>, private scoreService: ScoreService) { }
 
   ngOnInit(): void {
-    this.store.pipe(
-      select(getGuessUserInput),
-      tap(test => console.log(test)),
-      switchMap(userInput => this.scoreService.guess(userInput, this.store)),
-    ).subscribe(score => console.log(score));
+    this.store.select(getPlayerScore)
+      .subscribe(playerScore => this.playerScore = playerScore);
   }
 }
