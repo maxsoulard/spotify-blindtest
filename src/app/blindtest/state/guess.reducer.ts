@@ -1,4 +1,4 @@
-import { createReducer, on, createFeatureSelector, createSelector, State } from '@ngrx/store';
+import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
 import { guess, guessSuccess } from './guess.actions';
 import * as fromRoot from '../../state/app.state';
 

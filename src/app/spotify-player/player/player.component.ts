@@ -37,14 +37,18 @@ export class PlayerComponent implements OnInit {
     this.store.pipe(
       select(getTrackPlaying),
     ).subscribe((randomTrack) => {
-      if (randomTrack) {
-        this.trackPlaying = randomTrack;
-        this.spotifyPlayerService.play({
-          playerInstance: this.spotifyInstance.player,
-          spotify_uri: randomTrack.uri,
-        });
-      }
+      this.nextTrack(randomTrack);
     });
+  }
+
+  private nextTrack(track){
+    if (track) {
+      this.trackPlaying = track;
+      this.spotifyPlayerService.play({
+        playerInstance: this.spotifyInstance.player,
+        spotify_uri: track.uri,
+      });
+    }
   }
 
   playSong() {

@@ -6,12 +6,16 @@ import { StoreModule } from '@ngrx/store';
 import { guessReducer } from './state/guess.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { GuessEffects } from './state/guess.effects';
+import { BlindtestService } from './services/blindtest.service';
 
 
 @NgModule({
   declarations: [
     GuessComponent,
     ScoreComponent
+  ],
+  providers: [
+    BlindtestService
   ],
   imports: [
     CommonModule,
