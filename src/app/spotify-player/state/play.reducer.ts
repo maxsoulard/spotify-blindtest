@@ -1,5 +1,5 @@
 import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
-import { play, getRandomTrackSuccess } from './play.actions';
+import { play, getRandomTrackSuccess, getUserSavedTracksSuccess } from './play.actions';
 import * as fromRoot from '../../state/app.state';
 import { SpotifyTrack } from '../model/spotify-track-informations.model';
 
@@ -10,11 +10,13 @@ export interface State extends fromRoot.State {
 export interface PlayerState {
   playRandomSong: boolean;
   trackPlaying: SpotifyTrack;
+  tracks: SpotifyTrack[];
 }
 
 const initialState: PlayerState = {
   playRandomSong: false,
-  trackPlaying: undefined
+  trackPlaying: undefined,
+  tracks: []
 };
 
 const _playerReducer = createReducer(initialState,
@@ -25,6 +27,14 @@ const _playerReducer = createReducer(initialState,
         playRandomSong: !state.playRandomSong,
       };
     }),
+    on(getUserSavedTracksSuccess,
+      (state, action): PlayerState => {
+        return {
+          ...state,
+          tracks: action.tracks,
+        };
+      }
+    ),
     on(getRandomTrackSuccess,
       (state, action): PlayerState => {
         return {

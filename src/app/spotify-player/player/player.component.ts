@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SpotifyPlayerService } from '../spotify-player.service';
 import { Store, select } from '@ngrx/store';
-import { play } from '../state/play.actions';
+import { play, getUserSavedTracks } from '../state/play.actions';
 import { getTrackPlaying } from '../state/play.reducer';
 
 @Component({
@@ -39,6 +39,8 @@ export class PlayerComponent implements OnInit {
     ).subscribe((randomTrack) => {
       this.nextTrack(randomTrack);
     });
+
+    this.store.dispatch(getUserSavedTracks());
   }
 
   private nextTrack(track){

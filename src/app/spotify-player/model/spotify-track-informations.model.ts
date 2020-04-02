@@ -1,3 +1,7 @@
+export interface SpotifyItem {
+  track: SpotifyTrack;
+}
+
 export interface SpotifyTrack {
   artists: SpotifyArtist[];
   href: string;
