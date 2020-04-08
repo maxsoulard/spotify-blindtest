@@ -115,6 +115,7 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  name?: Maybe<String>;
 }>;
 
 export interface UserWhereInput {
@@ -414,9 +415,4 @@ export const models: Model[] = [
  * Type Defs
  */
 
-export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
-  typeDefs,
-  models,
-  endpoint: `https://eu1.prisma.sh/maxime-soulard-80dc97/spotify-blindtest/dev`
-});
-export const prisma = new Prisma();
+export const prisma: Prisma;

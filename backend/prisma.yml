@@ -2,5 +2,5 @@ endpoint: https://eu1.prisma.sh/maxime-soulard-80dc97/spotify-blindtest/dev
 datamodel: datamodel.prisma
 
 generate:
-  - generator: typescript-client
-    output: ./generated/prisma-client/
+  - generator: javascript-client
+    output: ./src/generated/prisma-client/

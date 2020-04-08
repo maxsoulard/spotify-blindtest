@@ -1,6 +1,6 @@
 type User {
   id: ID! @id
-  name: String!
+  name: String! @unique
   score: Int!
   gamesCount: Int!
 }
