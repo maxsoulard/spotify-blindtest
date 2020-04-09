@@ -3,4 +3,13 @@ type User {
   name: String! @unique
   score: Int!
   gamesCount: Int!
+  gamesHistory: [GameHistory!]
+}
+
+type GameHistory {
+  id: ID! @id
+  score: Int!
+  date: DateTime!
+  user: User!
+  userId: ID
 }

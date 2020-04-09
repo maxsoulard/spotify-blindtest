@@ -1,10 +1,13 @@
 type Query {
   user(id: ID!): User
   userByName(name: String!): User
+  gamesHistory(id: ID!): [GameHistory!]
 }
 
 type Mutation {
   createUser(name: String!): User
+  updateUserScore(userId: ID!, score: Int!): User
+  addGameToHistory(userId: ID!, score: Int!): GameHistory
 }
 
 type User {
@@ -12,4 +15,14 @@ type User {
   name: String
   score: Int
   gamesCount: Int
+  gamesHistory: [GameHistory!]
 }
+
+type GameHistory {
+  id: ID!
+  score: Int
+  date: Date
+  user: User
+}
+
+scalar Date

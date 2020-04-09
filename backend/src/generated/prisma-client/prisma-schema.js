@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `type AggregateGameHistory {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -11,9 +15,250 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
+type GameHistory {
+  id: ID!
+  score: Int!
+  date: DateTime!
+  user: User!
+  userId: ID
+}
+
+type GameHistoryConnection {
+  pageInfo: PageInfo!
+  edges: [GameHistoryEdge]!
+  aggregate: AggregateGameHistory!
+}
+
+input GameHistoryCreateInput {
+  id: ID
+  score: Int!
+  date: DateTime!
+  user: UserCreateOneWithoutGamesHistoryInput!
+  userId: ID
+}
+
+input GameHistoryCreateManyWithoutUserInput {
+  create: [GameHistoryCreateWithoutUserInput!]
+  connect: [GameHistoryWhereUniqueInput!]
+}
+
+input GameHistoryCreateWithoutUserInput {
+  id: ID
+  score: Int!
+  date: DateTime!
+  userId: ID
+}
+
+type GameHistoryEdge {
+  node: GameHistory!
+  cursor: String!
+}
+
+enum GameHistoryOrderByInput {
+  id_ASC
+  id_DESC
+  score_ASC
+  score_DESC
+  date_ASC
+  date_DESC
+  userId_ASC
+  userId_DESC
+}
+
+type GameHistoryPreviousValues {
+  id: ID!
+  score: Int!
+  date: DateTime!
+  userId: ID
+}
+
+input GameHistoryScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  score: Int
+  score_not: Int
+  score_in: [Int!]
+  score_not_in: [Int!]
+  score_lt: Int
+  score_lte: Int
+  score_gt: Int
+  score_gte: Int
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  userId: ID
+  userId_not: ID
+  userId_in: [ID!]
+  userId_not_in: [ID!]
+  userId_lt: ID
+  userId_lte: ID
+  userId_gt: ID
+  userId_gte: ID
+  userId_contains: ID
+  userId_not_contains: ID
+  userId_starts_with: ID
+  userId_not_starts_with: ID
+  userId_ends_with: ID
+  userId_not_ends_with: ID
+  AND: [GameHistoryScalarWhereInput!]
+  OR: [GameHistoryScalarWhereInput!]
+  NOT: [GameHistoryScalarWhereInput!]
+}
+
+type GameHistorySubscriptionPayload {
+  mutation: MutationType!
+  node: GameHistory
+  updatedFields: [String!]
+  previousValues: GameHistoryPreviousValues
+}
+
+input GameHistorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: GameHistoryWhereInput
+  AND: [GameHistorySubscriptionWhereInput!]
+  OR: [GameHistorySubscriptionWhereInput!]
+  NOT: [GameHistorySubscriptionWhereInput!]
+}
+
+input GameHistoryUpdateInput {
+  score: Int
+  date: DateTime
+  user: UserUpdateOneRequiredWithoutGamesHistoryInput
+  userId: ID
+}
+
+input GameHistoryUpdateManyDataInput {
+  score: Int
+  date: DateTime
+  userId: ID
+}
+
+input GameHistoryUpdateManyMutationInput {
+  score: Int
+  date: DateTime
+  userId: ID
+}
+
+input GameHistoryUpdateManyWithoutUserInput {
+  create: [GameHistoryCreateWithoutUserInput!]
+  delete: [GameHistoryWhereUniqueInput!]
+  connect: [GameHistoryWhereUniqueInput!]
+  set: [GameHistoryWhereUniqueInput!]
+  disconnect: [GameHistoryWhereUniqueInput!]
+  update: [GameHistoryUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [GameHistoryUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [GameHistoryScalarWhereInput!]
+  updateMany: [GameHistoryUpdateManyWithWhereNestedInput!]
+}
+
+input GameHistoryUpdateManyWithWhereNestedInput {
+  where: GameHistoryScalarWhereInput!
+  data: GameHistoryUpdateManyDataInput!
+}
+
+input GameHistoryUpdateWithoutUserDataInput {
+  score: Int
+  date: DateTime
+  userId: ID
+}
+
+input GameHistoryUpdateWithWhereUniqueWithoutUserInput {
+  where: GameHistoryWhereUniqueInput!
+  data: GameHistoryUpdateWithoutUserDataInput!
+}
+
+input GameHistoryUpsertWithWhereUniqueWithoutUserInput {
+  where: GameHistoryWhereUniqueInput!
+  update: GameHistoryUpdateWithoutUserDataInput!
+  create: GameHistoryCreateWithoutUserInput!
+}
+
+input GameHistoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  score: Int
+  score_not: Int
+  score_in: [Int!]
+  score_not_in: [Int!]
+  score_lt: Int
+  score_lte: Int
+  score_gt: Int
+  score_gte: Int
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  user: UserWhereInput
+  userId: ID
+  userId_not: ID
+  userId_in: [ID!]
+  userId_not_in: [ID!]
+  userId_lt: ID
+  userId_lte: ID
+  userId_gt: ID
+  userId_gte: ID
+  userId_contains: ID
+  userId_not_contains: ID
+  userId_starts_with: ID
+  userId_not_starts_with: ID
+  userId_ends_with: ID
+  userId_not_ends_with: ID
+  AND: [GameHistoryWhereInput!]
+  OR: [GameHistoryWhereInput!]
+  NOT: [GameHistoryWhereInput!]
+}
+
+input GameHistoryWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
+  createGameHistory(data: GameHistoryCreateInput!): GameHistory!
+  updateGameHistory(data: GameHistoryUpdateInput!, where: GameHistoryWhereUniqueInput!): GameHistory
+  updateManyGameHistories(data: GameHistoryUpdateManyMutationInput!, where: GameHistoryWhereInput): BatchPayload!
+  upsertGameHistory(where: GameHistoryWhereUniqueInput!, create: GameHistoryCreateInput!, update: GameHistoryUpdateInput!): GameHistory!
+  deleteGameHistory(where: GameHistoryWhereUniqueInput!): GameHistory
+  deleteManyGameHistories(where: GameHistoryWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -40,6 +285,9 @@ type PageInfo {
 }
 
 type Query {
+  gameHistory(where: GameHistoryWhereUniqueInput!): GameHistory
+  gameHistories(where: GameHistoryWhereInput, orderBy: GameHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GameHistory]!
+  gameHistoriesConnection(where: GameHistoryWhereInput, orderBy: GameHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GameHistoryConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -47,6 +295,7 @@ type Query {
 }
 
 type Subscription {
+  gameHistory(where: GameHistorySubscriptionWhereInput): GameHistorySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -55,6 +304,7 @@ type User {
   name: String!
   score: Int!
   gamesCount: Int!
+  gamesHistory(where: GameHistoryWhereInput, orderBy: GameHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GameHistory!]
 }
 
 type UserConnection {
@@ -64,6 +314,19 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
+  name: String!
+  score: Int!
+  gamesCount: Int!
+  gamesHistory: GameHistoryCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutGamesHistoryInput {
+  create: UserCreateWithoutGamesHistoryInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutGamesHistoryInput {
   id: ID
   name: String!
   score: Int!
@@ -115,12 +378,31 @@ input UserUpdateInput {
   name: String
   score: Int
   gamesCount: Int
+  gamesHistory: GameHistoryUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
   score: Int
   gamesCount: Int
+}
+
+input UserUpdateOneRequiredWithoutGamesHistoryInput {
+  create: UserCreateWithoutGamesHistoryInput
+  update: UserUpdateWithoutGamesHistoryDataInput
+  upsert: UserUpsertWithoutGamesHistoryInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutGamesHistoryDataInput {
+  name: String
+  score: Int
+  gamesCount: Int
+}
+
+input UserUpsertWithoutGamesHistoryInput {
+  update: UserUpdateWithoutGamesHistoryDataInput!
+  create: UserCreateWithoutGamesHistoryInput!
 }
 
 input UserWhereInput {
@@ -168,6 +450,9 @@ input UserWhereInput {
   gamesCount_lte: Int
   gamesCount_gt: Int
   gamesCount_gte: Int
+  gamesHistory_every: GameHistoryWhereInput
+  gamesHistory_some: GameHistoryWhereInput
+  gamesHistory_none: GameHistoryWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
