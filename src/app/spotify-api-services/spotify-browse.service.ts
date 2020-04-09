@@ -9,6 +9,10 @@ import * as _ from 'lodash';
 export class SpotifyBrowseService {
   constructor(private httpClient: HttpClient) {}
 
+  getSpotifyProfile() {
+    return this.httpClient.get<any>('https://api.spotify.com/v1/me');
+  }
+
   getUserTopTracks(): Observable<any> {
     return this.httpClient.get<any>('	https://api.spotify.com/v1/me/top/tracks');
   }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SpotifyBrowseService } from 'src/app/spotify-api-services/spotify-browse.service';
+import { map } from 'rxjs/operators';
 declare let URLSearchParams: any;
 
 @Component({
@@ -9,14 +11,19 @@ declare let URLSearchParams: any;
 })
 export class SpotifyGrantAccessCallbackComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router, private spotifyBrowseService: SpotifyBrowseService) { }
 
   ngOnInit() {
     this.route.fragment.subscribe(fragment => {
       const urlFragment = new URLSearchParams(fragment);
       localStorage.setItem('access_token', urlFragment.get('access_token'));
-      this.router.navigateByUrl('/play');
+
+      this.spotifyBrowseService.getSpotifyProfile().pipe(
+        map(userProfile => {
+          // TODO graphql create or update
+          console.log(userProfile);
+        })
+      ).subscribe(() => this.router.navigateByUrl('/play'))
     });
   }
-
 }

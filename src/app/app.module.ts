@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { GameComponent } from './game/game.component';
 import { BlindtestModule } from './blindtest/blindtest.module';
 import { EffectsModule } from '@ngrx/effects';
+import { GraphQLModule } from './graphql.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { EffectsModule } from '@ngrx/effects';
       maxAge: 25,
       logOnly: environment.production
     }),
+    GraphQLModule,
   ],
   providers: [
     {
