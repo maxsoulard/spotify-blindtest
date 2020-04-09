@@ -26,23 +26,34 @@ const _playerReducer = createReducer(initialState,
         ...state,
         playRandomSong: !state.playRandomSong,
       };
-    }),
-    on(getUserSavedTracksSuccess,
-      (state, action): PlayerState => {
-        return {
-          ...state,
-          tracks: action.tracks,
-        };
+    }
+  ),
+  on(play,
+    (state, action): PlayerState => {
+      return {
+        ...state,
+        playRandomSong: !state.playRandomSong,
+        tracks: filterPlayingTrack(state.trackPlaying, state.tracks),
+      };
+    }
+  ),
+  on(getUserSavedTracksSuccess,
+    (state, action): PlayerState => {
+      return {
+        ...state,
+        tracks: action.tracks,
+      };
+    }
+  ),
+  on(getRandomTrackSuccess,
+    (state, action): PlayerState => {
+      return {
+        ...state,
+        trackPlaying: action.trackPlaying,
       }
-    ),
-    on(getRandomTrackSuccess,
-      (state, action): PlayerState => {
-        return {
-          ...state,
-          trackPlaying: action.trackPlaying
-        }
-    })
-  );
+    }
+  ),
+);
 
 
 export function playerReducer(state: PlayerState, action) {
@@ -58,3 +69,11 @@ export const getTrackPlaying = createSelector(
   getPlayerFeatureState,
   state => state.trackPlaying
 );
+
+function filterPlayingTrack(playingTrack, tracks) {
+  let playableTracks;
+  if (playingTrack && playingTrack.id) {
+    playableTracks = tracks.filter(t => t.id !== playingTrack.id);
+  }
+  return playableTracks || tracks;
+}
