@@ -1,4 +1,5 @@
 type Query {
+  users: [User!]
   user(id: ID!): User
   userByName(name: String!): User
   gamesHistory(id: ID!): [GameHistory!]

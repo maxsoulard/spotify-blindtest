@@ -1,4 +1,7 @@
 module.exports = {
+  users: (root, args, context) => {
+    return context.prisma.users()
+  },
   user: (root, args, context, info) => {
     return context.prisma.user({id: args.id})
   },

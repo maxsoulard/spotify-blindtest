@@ -14,6 +14,9 @@ import { GameComponent } from './game/game.component';
 import { BlindtestModule } from './blindtest/blindtest.module';
 import { EffectsModule } from '@ngrx/effects';
 import { GraphQLModule } from './graphql.module';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
+import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 
 @NgModule({
   declarations: [
@@ -34,13 +37,26 @@ import { GraphQLModule } from './graphql.module';
       maxAge: 25,
       logOnly: environment.production
     }),
-    GraphQLModule,
+    ApolloModule,
+    HttpLinkModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpotifyAuthInterceptor,
       multi: true
+    },
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: "https://graphql.anilist.co/"
+          })
+        }
+      },
+      deps: [HttpLink]
     }
   ],
   bootstrap: [AppComponent]
