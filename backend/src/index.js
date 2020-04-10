@@ -10,9 +10,17 @@ const resolvers = {
   User,
 }
 
+const opts = {
+  port: 4000,
+  cors: {
+    credentials: true,
+    origin: ['http://localhost:4200', 'https://spotify-blindtest-api.now.sh']
+  }
+};
+
 const server = new GraphQLServer({
   typeDefs: __dirname + '/schema.graphql',
   resolvers,
-  context: { prisma }
+  context: { prisma },
 })
-server.start(() => console.log(`Server is running on http://localhost:4000`))
+server.start(opts, () => console.log(`Server is running on http://localhost:4000`))
