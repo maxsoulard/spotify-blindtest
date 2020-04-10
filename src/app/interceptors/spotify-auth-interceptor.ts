@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class SpotifyAuthInterceptor implements HttpInterceptor {
@@ -12,6 +11,8 @@ export class SpotifyAuthInterceptor implements HttpInterceptor {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
         }
       });
+      return next.handle(req);
+    } else {
       return next.handle(req);
     }
   }
