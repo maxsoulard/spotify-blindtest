@@ -1,4 +1,5 @@
 <div class="box">
   <app-spotify-login></app-spotify-login>
+  <div *ngIf="authError" class="error">Unable to authenticate.</div>
   <router-outlet></router-outlet>
 </div>

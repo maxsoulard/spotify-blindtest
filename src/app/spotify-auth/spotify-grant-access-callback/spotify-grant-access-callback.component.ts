@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpotifyBrowseService } from 'src/app/spotify-api-services/spotify-browse.service';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap, catchError } from 'rxjs/operators';
 import { Apollo, Query } from 'apollo-angular';
 declare let URLSearchParams: any;
 import gql from 'graphql-tag';
 import { Store } from '@ngrx/store';
 import { PlayerState } from 'src/app/spotify-player/state/play.reducer';
 import * as authActions from '../state/auth.actions';
+import { of } from 'rxjs';
 
 const createUser = gql`
   mutation($displayName: String!) {
@@ -50,9 +51,14 @@ export class SpotifyGrantAccessCallbackComponent implements OnInit {
           }
         })
       }),
-        tap(({data}: any) => {
-          this.store$.dispatch(authActions.userSignedIn({user: data.user}))
-        })
+      tap(({data}: any) => {
+        this.store$.dispatch(authActions.userSignedIn({user: data.user}))
+      }),
+      catchError(error => {
+        console.error(error);
+        this.store$.dispatch(authActions.userSignedInFail({error}));
+        return of(error);
+      }),
       ).subscribe(() => {});
     });
   }
