@@ -37,8 +37,7 @@ import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
       maxAge: 25,
       logOnly: environment.production
     }),
-    ApolloModule,
-    HttpLinkModule,
+    GraphQLModule,
   ],
   providers: [
     {
@@ -46,18 +45,6 @@ import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
       useClass: SpotifyAuthInterceptor,
       multi: true
     },
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory: (httpLink: HttpLink) => {
-        return {
-          cache: new InMemoryCache(),
-          link: httpLink.create({
-            uri: "https://graphql.anilist.co/"
-          })
-        }
-      },
-      deps: [HttpLink]
-    }
   ],
   bootstrap: [AppComponent]
 })
