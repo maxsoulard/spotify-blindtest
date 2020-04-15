@@ -1,5 +1,5 @@
 import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
-import { guess, guessSuccess } from './guess.actions';
+import { guess, guessSuccess, endGame } from './guess.actions';
 import * as fromRoot from '../../state/app.state';
 
 export interface State extends fromRoot.State {
@@ -9,11 +9,13 @@ export interface State extends fromRoot.State {
 export interface BlindtestState {
   userInput: string;
   score: number;
+  finalScore: number;
 }
 
 const initialState: BlindtestState = {
   userInput: '',
-  score: 0
+  score: 0,
+  finalScore: undefined
 };
 
 const _guessReducer = createReducer(initialState,
@@ -30,6 +32,13 @@ const _guessReducer = createReducer(initialState,
         ...state,
         score: state.score + action.score
       };
+    }),
+  on(endGame,
+    (state): BlindtestState => {
+      return {
+        ...state,
+        finalScore: state.score
+      }
     })
 );
 
@@ -46,3 +55,7 @@ export const getPlayerScore = createSelector(
   getGuesserFeatureState,
   state => state.score
 );
+export const getFinalScore = createSelector(
+  getGuesserFeatureState,
+  state => state.finalScore
+)

@@ -8,10 +8,25 @@ import { BlindtestState } from './guess.reducer';
 import { PlayerState } from 'src/app/spotify-player/state/play.reducer';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
+import gql from 'graphql-tag';
+import { Apollo } from 'apollo-angular';
+import { AuthState } from 'src/app/spotify-auth/state/auth.reducers';
+
+const submitFinalScore = gql`
+  mutation($userId: ID!, $score: Int!) {
+    addGameToHistory(userId: $userId, score: $score) {
+      id
+      score
+      user {
+        id
+        name
+      }
+    }
+  }`;
 
 @Injectable()
 export class GuessEffects {
-  constructor(private store: Store<any>, private actions$: Actions, private blindtestService: BlindtestService) {}
+  constructor(private store: Store<any>, private actions$: Actions, private blindtestService: BlindtestService, private apollo: Apollo) {}
 
   @Effect()
   evaluateGuess$ = this.actions$.pipe(
@@ -36,5 +51,30 @@ export class GuessEffects {
   guessSuccess$ = this.actions$.pipe(
     ofType(guessActions.guessSuccess),
     map(() => playActions.play())
+  );
+
+  @Effect()
+  submitFinalScore$ = this.actions$.pipe(
+    ofType(guessActions.endGame),
+    mergeMap(() => {
+      return this.store.pipe(
+        take(1),
+        switchMap((state: {player: PlayerState, blindtest: BlindtestState, auth: AuthState}) => {
+          return this.apollo.mutate({
+            mutation: submitFinalScore,
+            variables: {
+              userId: state.auth.user.id,
+              score: state.blindtest.finalScore
+            }
+          })
+        }),
+        map(() => guessActions.submitFinalScoreSuccess()),
+        catchError(error => {
+          console.error(error);
+          this.store.dispatch(guessActions.submitFinalScoreFail(error));
+          return of({error})
+        })
+      );
+    })
   );
 }

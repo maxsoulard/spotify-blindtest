@@ -2,11 +2,10 @@ import { Injectable } from "@angular/core";
 import { SpotifyBrowseService } from 'src/app/spotify-api-services/spotify-browse.service';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import * as playActions from './play.actions';
-import { mergeMap, map, take, switchMap } from 'rxjs/operators';
-import { SpotifyTrack, SpotifyItem } from '../model/spotify-track-informations.model';
+import { mergeMap, map, take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { PlayerState } from './play.reducer';
-import * as _ from 'lodash';
+import * as guessActions from '../../blindtest/state/guess.actions';
 
 @Injectable()
 export class PlayEffects {
@@ -20,9 +19,9 @@ export class PlayEffects {
         take(1),
         map((state) => {
           const randomIndex = Math.floor(Math.random() * Math.floor(state.player.tracks.length));
-          return state.player.tracks[randomIndex];
+          if (state.player.tracks.length === 0) return guessActions.endGame();
+          return playActions.getRandomTrackSuccess({trackPlaying: state.player.tracks[randomIndex]});
         }),
-        map((randomTrack: SpotifyTrack) => (playActions.getRandomTrackSuccess({trackPlaying: randomTrack})))
       )
     }));
 
