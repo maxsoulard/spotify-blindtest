@@ -7,7 +7,7 @@ import { guessReducer } from './state/guess.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { GuessEffects } from './state/guess.effects';
 import { BlindtestService } from './services/blindtest.service';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +19,7 @@ import { BlindtestService } from './services/blindtest.service';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     StoreModule.forFeature('blindtest', guessReducer),
     EffectsModule.forFeature(
       [ GuessEffects ]

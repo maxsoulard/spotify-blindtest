@@ -30,7 +30,8 @@ const _guessReducer = createReducer(initialState,
     (state, action): BlindtestState => {
       return {
         ...state,
-        score: state.score + action.score
+        score: state.score + action.score,
+        userInput: ''
       };
     }),
   on(endGame,

@@ -13,7 +13,7 @@ import { authReducer } from './state/auth.reducers';
     StoreModule.forFeature('auth', authReducer),
   ],
   providers: [
-    SpotifyAuthService
+    SpotifyAuthService,
   ],
   exports: [
     SpotifyLoginComponent,

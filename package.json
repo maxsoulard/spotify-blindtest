@@ -31,6 +31,7 @@
     "graphql": "^14.5.0",
     "graphql-tag": "^2.10.0",
     "lodash": "^4.17.15",
+    "nes.css": "^2.3.0",
     "prisma-client-lib": "^1.34.10",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

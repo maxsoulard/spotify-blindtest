@@ -1,3 +1,3 @@
-<div>
-    <input placeholder="Guess playing song" #guessInput (keyup)="guess($event, guessInput.value)">
+<div class="nes-field`">
+    <input placeholder="Guess playing song" class="nes-input is-dark" [(ngModel)]="userInput" (keyup)="guess($event)">
 </div>
