@@ -32,34 +32,37 @@ export class SpotifyGrantAccessCallbackComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private store$: Store<{player: PlayerState}>,
-    private router: Router,
     private spotifyBrowseService: SpotifyBrowseService,
     private apollo: Apollo) { }
 
   ngOnInit() {
-    this.route.fragment.subscribe(fragment => {
-      const urlFragment = new URLSearchParams(fragment);
-      localStorage.setItem('access_token', urlFragment.get('access_token'));
-      this.router.navigateByUrl('/play');
-
-      this.spotifyBrowseService.getSpotifyProfile().pipe(
-        switchMap(userProfile => {
-          return this.apollo.mutate({
+    this.route.fragment.pipe(
+      tap((fragment) => {
+        const urlFragment = new URLSearchParams(fragment);
+        localStorage.setItem('access_token', urlFragment.get('access_token'));
+      }),
+      switchMap(() => {
+        return this.spotifyBrowseService.getSpotifyProfile();
+      }),
+      switchMap(userProfile => {
+        return this.apollo.mutate({
           mutation: createUser,
           variables: {
             displayName: userProfile.display_name
           }
-        })
+        });
       }),
       tap(({data}: any) => {
-        this.store$.dispatch(authActions.userSignedIn({user: data.user}))
+        localStorage.setItem('user_id', data.user.id);
+        this.store$.dispatch(authActions.userSignedIn({user: data.user}));
       }),
       catchError(error => {
         console.error(error);
         this.store$.dispatch(authActions.userSignedInFail({error}));
         return of(error);
       }),
-      ).subscribe(() => {});
-    });
+      ).subscribe(() => {
+        document.location.href = document.location.origin + '/play';
+      });
   }
 }

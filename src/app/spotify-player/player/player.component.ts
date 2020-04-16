@@ -19,21 +19,22 @@ export class PlayerComponent implements OnInit {
   constructor(private store: Store<any>,
     private spotifyPlayerService: SpotifyPlayerService,
     private changeDetector: ChangeDetectorRef) {
-      // Init spotify SDK
-      (<any>window).onSpotifyWebPlaybackSDKReady = () => {
-        try {
-          this.spotifyPlayerService.getSpotifyInstance(({player, deviceId}) => {
-            this.spotifyInstance = {player, deviceId};
-            this.displayPlayer = true;
-            this.changeDetector.detectChanges();
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-  }
+    }
 
   ngOnInit() {
+    (<any>window).onSpotifyWebPlaybackSDKReady = () => {
+      console.log('spotify web playback sdk is ready');
+      try {
+        this.spotifyPlayerService.getSpotifyInstance(({player, deviceId}) => {
+          this.spotifyInstance = {player, deviceId};
+          this.displayPlayer = true;
+          this.changeDetector.detectChanges();
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     this.store.pipe(
       select(getTrackPlaying),
     ).subscribe((randomTrack) => {
