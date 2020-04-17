@@ -14,7 +14,7 @@ const opts = {
   port: 4000,
   cors: {
     credentials: true,
-    origin: ['http://localhost:4200', 'https://spotify-blindtest-api.now.sh']
+    origin: ['http://localhost:4200', 'https://spotify-blindtest.now.sh']
   }
 };
 
