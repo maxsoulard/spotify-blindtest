@@ -1,8 +1,11 @@
+# Blindtest types
 type Query {
   users: [User!]
   user(id: ID!): User
   userByName(name: String!): User
   gamesHistory(id: ID!): [GameHistory!]
+  track(id: ID!): Track
+  artist(id: ID!): Artist
 }
 
 type Mutation {
@@ -26,4 +29,17 @@ type GameHistory {
   user: User
 }
 
+# Spotify types
+type Track {
+  id: ID!
+  name: String
+  artist: Artist
+}
+
+type Artist {
+  id: ID!
+  name: String
+}
+
+# Scalar
 scalar Date

@@ -13,10 +13,6 @@ export class SpotifyBrowseService {
     return this.httpClient.get<any>('https://api.spotify.com/v1/me');
   }
 
-  getUserTopTracks(): Observable<any> {
-    return this.httpClient.get<any>('	https://api.spotify.com/v1/me/top/tracks');
-  }
-
   getUserSavedTracks(): Observable<SpotifyTrack[]> {
     return this.httpClient.get<any>('https://api.spotify.com/v1/me/albums?limit=1')
       .pipe(
@@ -37,28 +33,5 @@ export class SpotifyBrowseService {
           return tracks;
         })
       )
-    /* return this.httpClient.get<any>('https://api.spotify.com/v1/me/tracks')
-      .pipe(
-        map(response => {
-          return response.items;
-        })
-      ); */
-  }
-
-  getUserAlbums(): Observable<any> {
-    return this.httpClient.get<any>('https://api.spotify.com/v1/me/albums');
-  }
-
-  getArtistTopTrack(id): Observable<any> {
-    return this.httpClient.get<any>(`https://api.spotify.com/v1/artists/${id}/top-tracks`);
-  }
-
-  getARandomSong(): Observable<SpotifyTrack> {
-    return this.getUserSavedTracks().pipe(
-      map((topTracks: any) => {
-        const randomIndex = Math.floor(Math.random() * Math.floor(20));
-        return topTracks.items[randomIndex];
-      })
-    );
   }
 }

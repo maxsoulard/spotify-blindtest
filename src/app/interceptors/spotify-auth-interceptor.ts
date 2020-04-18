@@ -11,9 +11,13 @@ export class SpotifyAuthInterceptor implements HttpInterceptor {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
         }
       });
-      return next.handle(req);
     } else {
-      return next.handle(req);
+      req = req.clone({
+        setHeaders: {
+          'X-Spotify-Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+        }
+      });
     }
+    return next.handle(req);
   }
 }
