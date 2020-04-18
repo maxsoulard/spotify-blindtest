@@ -1,9 +1,16 @@
-const { GraphQLServer } = require('graphql-yoga')
-const { prisma } = require('./prisma-client')
-const Query = require('./resolvers/query')
-const Mutation = require('./resolvers/mutation')
-const User = require('./resolvers/user')
+// FIXME import GraphQLServer
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { GraphQLServer } = require('graphql-yoga');
 
+const { prisma } = require('./prisma-client');
+import Query from './resolvers/query.js';
+import Mutation from './resolvers/mutation.js';
+import User from './resolvers/user.js';
+import dotenv from 'dotenv';
+import { SpotifyApi } from './spotify-api.js';
+
+dotenv.config();
 const resolvers = {
   Query,
   Mutation,
@@ -19,8 +26,20 @@ const opts = {
 };
 
 const server = new GraphQLServer({
-  typeDefs: __dirname + '/schema.graphql',
+  typeDefs: './src/schema.graphql',
   resolvers,
   context: { prisma },
 })
-server.start(opts, () => console.log(`Server is running on http://localhost:4000`))
+
+// Middleware to check or refresh Spotify access token (1h lifetime)
+server.express.use(async (req, res, next) => {
+  if (req.method !== 'OPTIONS') {
+    console.log(req.header('X-Spotify-Authorization'));
+  }
+  await SpotifyApi.refresh();
+  next();
+});
+
+server.start(opts, async () => {
+  console.log(`Server is running on http://localhost:4000`);
+});

@@ -1,5 +1,5 @@
-module.exports = {
-  gamesHistory: (root, args, context, info) => {
+export default {
+  gamesHistory: (root, args, context) => {
     return context.prisma.user({id: root.id}).gamesHistory()
   }
 }
