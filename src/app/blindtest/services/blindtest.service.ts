@@ -2,11 +2,22 @@ import { Injectable } from "@angular/core";
 import { SpotifyTrack } from 'src/app/spotify-player/model/spotify-track-informations.model';
 import { of, throwError } from 'rxjs';
 
+const engArticlesLexicon = [
+  'a', 'an', 'the', 'them', 'of', 'in',
+];
+
 @Injectable()
 export class BlindtestService {
 
   constructor() {}
 
+  /**
+   * TODO
+   * exclude articles
+   * exclude punctuations
+   * @param userInput
+   * @param track
+   */
   evaluatePlayerGuess(userInput: string, track: SpotifyTrack) {
     let score = 0;
 
