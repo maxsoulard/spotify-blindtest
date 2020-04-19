@@ -25,7 +25,7 @@ const opts = {
 };
 
 const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
+  typeDefs: __dirname + '/schema.graphql',
   resolvers,
   context: (({request}) => {
     return {

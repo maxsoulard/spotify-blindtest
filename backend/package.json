@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "start": "npm run build && nodemon --exec node --inspect dist/index.js",
-    "build": "tsc"
+    "build": "tsc && cp src/schema.graphql dist/"
   },
   "private": true,
   "dependencies": {
