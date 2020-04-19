@@ -4,14 +4,14 @@ type Query {
   user(id: ID!): User
   userByName(name: String!): User
   gamesHistory(id: ID!): [GameHistory!]
-  track(id: ID!): Track
-  artist(id: ID!): Artist
+  game(id: ID!): Game
 }
 
 type Mutation {
   createUser(name: String!): User
   updateUserScore(userId: ID!, score: Int!): User
   addGameToHistory(userId: ID!, score: Int!): GameHistory
+  startNewGame(userId: ID!): Game
 }
 
 type User {
@@ -29,8 +29,14 @@ type GameHistory {
   user: User
 }
 
+type Game {
+  id: ID!
+  tracks: [SpotifyTrack!]
+  user(userId: ID!): User
+}
+
 # Spotify types
-type Track {
+type SpotifyTrack {
   id: ID!
   name: String
   artist: Artist

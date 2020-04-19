@@ -1,5 +1,3 @@
-import { SpotifyApi } from '../spotify-api.js';
-
 export const Query = {
   users: (root, args, context) => {
     return context.prisma.users();
@@ -12,11 +10,5 @@ export const Query = {
   },
   gamesHistory: (root, args, context, info) => {
     return context.prisma.user({id: args.id}).gamesHistory();
-  },
-  track: (root, args, context) => {
-    return SpotifyApi.axios.get(`/tracks/${args.id}`);
-  },
-  artist: (root, args, context) => {
-    return SpotifyApi.axios.get(`/artists/${args.id}`);
   },
 };

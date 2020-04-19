@@ -34,4 +34,13 @@ export class SpotifyApi {
     }
     return SpotifyApi.accessData;
   }
+
+  static async get(url, headers) {
+    if (url.includes('/me')) {
+      const config = { headers };
+      return SpotifyApi.axios.get(url, config);
+    } else {
+      return SpotifyApi.axios.get(url);
+    }
+  }
 }

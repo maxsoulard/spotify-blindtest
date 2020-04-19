@@ -4,14 +4,16 @@ import { prisma } from './prisma-client';
 import { Query } from './resolvers/query.js';
 import { Mutation } from './resolvers/mutation.js';
 import { User } from './resolvers/user.js';
+import { Game } from './resolvers/game.js';
 import * as dotenv from 'dotenv';
-import { SpotifyApi } from './spotify-api.js';
+import { SpotifyApi } from './spotify-api';
 
 dotenv.config();
 const resolvers = {
   Query,
   Mutation,
   User,
+  Game,
 }
 
 const opts = {
@@ -25,14 +27,16 @@ const opts = {
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
-  context: { prisma },
-})
+  context: (({request}) => {
+    return {
+      spotifyUserAuthHeader: `Bearer ${request.header('X-Spotify-Authorization')}`,
+      prisma,
+    }
+  }),
+});
 
 // Middleware to check or refresh Spotify access token (1h lifetime)
 server.express.use(async (req, res, next) => {
-  if (req.method !== 'OPTIONS') {
-    console.log(req.header('X-Spotify-Authorization'));
-  }
   await SpotifyApi.refresh();
   next();
 });
