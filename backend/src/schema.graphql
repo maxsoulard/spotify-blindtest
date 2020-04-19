@@ -39,7 +39,8 @@ type Game {
 type SpotifyTrack {
   id: ID!
   name: String
-  artist: Artist
+  uri: String
+  artists: [Artist!]
 }
 
 type Artist {

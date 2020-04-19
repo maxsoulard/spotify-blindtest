@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SpotifyBrowseService } from 'src/app/spotify-api-services/spotify-browse.service';
 import { switchMap, tap, catchError } from 'rxjs/operators';
-import { Apollo, Query } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 declare let URLSearchParams: any;
 import gql from 'graphql-tag';
-import { Store } from '@ngrx/store';
-import { PlayerState } from 'src/app/spotify-player/state/play.reducer';
-import * as authActions from '../state/auth.actions';
 import { of } from 'rxjs';
 
 const createUser = gql`
@@ -31,7 +28,6 @@ const createUser = gql`
 export class SpotifyGrantAccessCallbackComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
-    private store$: Store<{player: PlayerState}>,
     private spotifyBrowseService: SpotifyBrowseService,
     private apollo: Apollo) { }
 
@@ -54,15 +50,15 @@ export class SpotifyGrantAccessCallbackComponent implements OnInit {
       }),
       tap(({data}: any) => {
         localStorage.setItem('user_id', data.user.id);
-        this.store$.dispatch(authActions.userSignedIn({user: data.user}));
+        // this.store$.dispatch(authActions.userSignedIn({user: data.user}));
       }),
       catchError(error => {
         console.error(error);
-        this.store$.dispatch(authActions.userSignedInFail({error}));
+        // this.store$.dispatch(authActions.userSignedInFail({error}));
         return of(error);
       }),
       ).subscribe(() => {
-        document.location.href = document.location.origin + '/play';
+        document.location.href = document.location.origin + '/';
       });
   }
 }

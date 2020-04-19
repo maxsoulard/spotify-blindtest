@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { Store } from '@ngrx/store';
+import { GameState } from '../game/state/game.reducer';
+import { Router } from '@angular/router';
 declare let Spotify: any;
 
 @Injectable({
@@ -7,10 +9,9 @@ declare let Spotify: any;
 })
 export class SpotifyPlayerService {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   getSpotifyInstance(cb) {
-    // return new Promise((resolve, reject) => {
       const token = localStorage.getItem('access_token');
       const player = new Spotify.Player({
         name: 'Web Playback SDK Quick Start Player',
@@ -19,7 +20,14 @@ export class SpotifyPlayerService {
 
       // Error handling
       player.addListener('initialization_error', ({ message }) => { throw new Error(message); });
-      player.addListener('authentication_error', ({ message }) => { throw new Error(message); });
+      player.addListener('authentication_error', ({ message }) => {
+        console.error(message);
+        if (message !== 'Invalid token scopes.') { // FIXME
+          localStorage.setItem('access_token', undefined);
+          localStorage.setItem('user_id', undefined);
+          this.router.navigateByUrl('/login');
+        }
+       });
       player.addListener('account_error', ({ message }) => { throw new Error(message); });
       player.addListener('playback_error', ({ message }) => { throw new Error(message); });
 
@@ -36,7 +44,6 @@ export class SpotifyPlayerService {
       player.addListener('ready', ({ deviceId }) => {
         cb({player, deviceId});
       });
-    // });
   }
 
   play({ spotify_uri, playerInstance: { _options: { getOAuthToken, id }}}) {

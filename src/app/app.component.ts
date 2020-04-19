@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthState, getAuthError } from './spotify-auth/state/auth.reducers';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +6,9 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'spotify-blindtest';
-  authError: Error;
+  title = 'Spotify Blindtest';
 
-  constructor(private store$: Store<{auth: AuthState}>) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.store$.select(getAuthError).subscribe(error => this.authError = error);
-  }
+  ngOnInit() {}
 }

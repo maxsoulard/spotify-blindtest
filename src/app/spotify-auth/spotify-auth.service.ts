@@ -7,7 +7,7 @@ export class SpotifyAuthService {
     constructor(private httpClient: HttpClient) {}
 
     login() {
-      const scope = ['streaming', 'user-read-private', 'user-top-read', 'user-library-read'].join('%20');
+      const scope = ['streaming', 'user-read-private', 'user-library-read'].join('%20');
       document.location.href =
           `${environment.spotifyBaseUrl}/authorize?client_id=${environment.clientId}&response_type=token&redirect_uri=${environment.spotifyRedirectUri}&scope=${scope}`;
     }

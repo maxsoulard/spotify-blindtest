@@ -29,7 +29,7 @@ const server = new GraphQLServer({
   resolvers,
   context: (({request}) => {
     return {
-      spotifyUserAuthHeader: `Bearer ${request.header('X-Spotify-Authorization')}`,
+      spotifyUserAuthHeader: request.header('X-Spotify-Authorization'),
       prisma,
     }
   }),

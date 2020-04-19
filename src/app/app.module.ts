@@ -14,6 +14,10 @@ import { GameComponent } from './game/game.component';
 import { BlindtestModule } from './blindtest/blindtest.module';
 import { EffectsModule } from '@ngrx/effects';
 import { GraphQLModule } from './graphql.module';
+import { gameReducer } from './game/state/game.reducer';
+import { GameEffects } from './game/state/game.effects';
+import { AuthGuardService } from './auth-guard.service';
+
 
 @NgModule({
   declarations: [
@@ -27,8 +31,12 @@ import { GraphQLModule } from './graphql.module';
     SpotifyPlayerModule,
     BlindtestModule,
     HttpClientModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot({
+      'game': gameReducer
+    }),
+    EffectsModule.forRoot([
+      GameEffects
+    ]),
     StoreDevtoolsModule.instrument({
       name: 'Spotify Blindtest',
       maxAge: 25,
@@ -42,6 +50,7 @@ import { GraphQLModule } from './graphql.module';
       useClass: SpotifyAuthInterceptor,
       multi: true
     },
+    AuthGuardService,
   ],
   bootstrap: [AppComponent]
 })
