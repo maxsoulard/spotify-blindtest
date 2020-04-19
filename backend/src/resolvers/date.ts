@@ -1,7 +1,7 @@
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
 
-const resolverMap = {
+export const resolverMap = {
   Date: new GraphQLScalarType({
     name: 'Date',
     description: 'Date custom scalar type',
@@ -19,5 +19,3 @@ const resolverMap = {
     },
   }),
 };
-
-module.exports = resolverMap;

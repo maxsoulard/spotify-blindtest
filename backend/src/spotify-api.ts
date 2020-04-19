@@ -6,7 +6,7 @@ import * as qs from 'querystring';
  * TODO: use a user token to fetch spotify data under /me route
  */
 export class SpotifyApi {
-  static accessData;
+  private static accessData;
   static axios;
   static async init() {
     const authOptions = {

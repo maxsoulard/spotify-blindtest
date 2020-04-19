@@ -1,6 +1,6 @@
-import Query from './query.js';
+import { Query } from './query.js';
 
-export default {
+export const Mutation = {
   createUser: (root, args, context) => {
     return context.prisma.createUser({name: args.name, score: 0, gamesCount: 0}).catch(() => Query.userByName(root, args, context))
   },

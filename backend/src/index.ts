@@ -1,13 +1,10 @@
-// FIXME import GraphQLServer
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 const { GraphQLServer } = require('graphql-yoga');
+import { prisma } from './prisma-client';
 
-const { prisma } = require('./prisma-client');
-import Query from './resolvers/query.js';
-import Mutation from './resolvers/mutation.js';
-import User from './resolvers/user.js';
-import dotenv from 'dotenv';
+import { Query } from './resolvers/query.js';
+import { Mutation } from './resolvers/mutation.js';
+import { User } from './resolvers/user.js';
+import * as dotenv from 'dotenv';
 import { SpotifyApi } from './spotify-api.js';
 
 dotenv.config();
