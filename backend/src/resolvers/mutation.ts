@@ -1,5 +1,5 @@
-import { Query } from './query.js';
-import { SpotifyApi } from '../spotify-api.js';
+import { Query } from './query';
+import { SpotifyApi } from '../spotify-api';
 import * as _ from 'lodash';
 
 export const Mutation = {
