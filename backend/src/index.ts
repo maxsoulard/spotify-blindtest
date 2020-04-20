@@ -7,8 +7,21 @@ import { User } from './resolvers/user';
 import { Game } from './resolvers/game';
 import * as dotenv from 'dotenv';
 import { SpotifyApi } from './spotify-api';
+import * as winston from 'winston';
 
 dotenv.config();
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'user-service' },
+  transports: [
+    new winston.transports.Console({ format: winston.format.simple() }),
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
+});
+
 const resolvers = {
   Query,
   Mutation,
@@ -37,6 +50,7 @@ const server = new GraphQLServer({
     return {
       spotifyUserAuthHeader: request.header('X-Spotify-Authorization'),
       prisma,
+      logger,
     }
   }),
 });

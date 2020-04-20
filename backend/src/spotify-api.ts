@@ -35,12 +35,14 @@ export class SpotifyApi {
     return SpotifyApi.accessData;
   }
 
-  static async get(url, headers) {
-    if (url.includes('/me')) {
-      const config = { headers };
-      return SpotifyApi.axios.get(url, config);
-    } else {
-      return SpotifyApi.axios.get(url);
+  static async get(url, headers, logger) {
+    try {
+        const config = { headers };
+        const result = url.includes('/me') ? await SpotifyApi.axios.get(url, config) : await SpotifyApi.axios.get(url);
+        return result;
+    } catch (error) {
+      logger.error(error);
+      throw error;
     }
   }
 }
