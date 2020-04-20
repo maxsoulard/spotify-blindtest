@@ -30,7 +30,7 @@ const resolvers = {
 }
 
 const opts = {
-  port: 4000,
+  port: process.env.PORT || 4000,
   cors: {
     credentials: true,
     origin: ['http://localhost:4200', 'https://spotify-blindtest.now.sh']
