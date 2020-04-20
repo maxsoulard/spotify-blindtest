@@ -4,8 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && nodemon --exec node --inspect dist/index.js",
-    "build": "tsc && cp src/schema.graphql dist/",
-    "now-build": "tsc --project tsconfig.json && cp src/schema.graphql dist/"
+    "build": "node_modules/typescript/bin/tsc && cp src/schema.graphql dist/",
+    "now-build": "node_modules/typescript/bin/tsc --project tsconfig.json && cp src/schema.graphql dist/"
   },
   "private": true,
   "dependencies": {
@@ -18,7 +18,8 @@
     "graphql-yoga": "^1.18.3",
     "lodash": "^4.17.15",
     "prisma-client-lib": "^1.34.10",
-    "tslib": "^1.10.0"
+    "tslib": "^1.10.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2",
